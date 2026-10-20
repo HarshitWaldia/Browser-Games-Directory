@@ -1,0 +1,39 @@
+Game names and links
+
+| S.no | Game name                                              | Link                                                                                                   |
+| ---- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| 1    | Black Ops 1 Zombies                                    | [vel.gg/bo1z](https://vel.gg/bo1z)                                                                     |
+| 2    | Black Ops 2                                            | [vibeslops.luckeysystems.com](https://vibeslops.luckeysystems.com)                                     |
+| 3    | Black Ops 3 Cheese Cube                                | [cheese-cube.pages.dev](https://cheese-cube.pages.dev)                                                 |
+| 4    | Call of Duty: World at War Zombies (Nacht der Untoten) | [zombies.bitcoinsapi.com](https://zombies.bitcoinsapi.com)                                             |
+| 5    | Command & Conquer: Generals Zero Hour                  | [generals.wasm.ltd](https://generals.wasm.ltd)                                                         |
+| 6    | Command & Conquer: Red Alert 2                         | [chronodivide.com](https://chronodivide.com)                                                           |
+| 7    | Counter-Strike 1.6                                     | [csjs.live](https://csjs.live)                                                                         |
+| 8    | CS Surf                                                | [surfd.net](https://surfd.net)                                                                         |
+| 9    | Crash Bash Online                                      | [crashbash.app](https://crashbash.app)                                                                 |
+| 10   | Diablo                                                 | [johnmilril.github.io/diablo_web](https://johnmilril.github.io/diablo_web/)                            |
+| 11   | GTA 5                                                  | [fiveplay.lol](https://fiveplay.lol)                                                                   |
+| 12   | GTA Chinatown Wars                                     | [gta-chinatown-wars.pages.dev](https://gta-chinatown-wars.pages.dev)                                   |
+| 13   | GTA III                                                | [wasmarcade.com/gta3](https://wasmarcade.com/gta3)                                                     |
+| 14   | GTA Vice City                                          | [joncodeofficial.github.io/gta-vice-city-wasm](https://joncodeofficial.github.io/gta-vice-city-wasm/) |
+| 15   | Half-Life                                              | [pixelsuft.github.io/hl](https://pixelsuft.github.io/hl/)                                              |
+| 16   | Halo: Combat Evolved                                   | [mitchellhynes.com/halo](https://mitchellhynes.com/halo/)                                              |
+| 17   | Halo CE Mobile                                         | [hcemobile.com](https://hcemobile.com)                                                                 |
+| 18   | Hedgewars                                              | [webwars.link](https://webwars.link)                                                                   |
+| 19   | Kino der Toten                                         | [kino-der-toten.pages.dev](https://kino-der-toten.pages.dev)                                           |
+| 20   | LEGO Island                                            | [isle.pizza](https://isle.pizza)                                                                       |
+| 21   | Minecraft 1.8.8                                        | [wasmarcade.com/minecraft](https://wasmarcade.com/minecraft)                                           |
+| 22   | Modern Warfare 2                                       | [ovz-game-production.up.railway.app](https://ovz-game-production.up.railway.app)                       |
+| 23   | Moon (Black Ops Zombies)                               | [moon-zombies.pages.dev](https://moon-zombies.pages.dev)                                               |
+| 24   | Pepsiman                                               | [pepsiman.ol.mr](https://pepsiman.ol.mr)                                                               |
+| 25   | PES 6                                                  | [pes6.optijuegos.net](https://pes6.optijuegos.net)                                                     |
+| 26   | Quake 1 / QuakeWorld                                   | [q1.pieter.com](https://q1.pieter.com)                                                                 |
+| 27   | Quake 2                                                | [q2.pieter.com](https://q2.pieter.com)                                                                 |
+| 28   | Quake 3                                                | [q3.pieter.com](https://q3.pieter.com)                                                                 |
+| 29   | Return to Castle Wolfenstein                           | [rtcw.pieter.com](https://rtcw.pieter.com)                                                             |
+| 30   | Skate 3                                                | [skate.aaddpp.lol](https://skate.aaddpp.lol)                                                           |
+| 31   | Skate Rust                                             | [global-terror.net](https://global-terror.net)                                                         |
+| 32   | The Binding of Isaac: Repentance+                      | [tboi.online](https://tboi.online)                                                                     |
+| 33   | The Simpsons: Hit & Run                                | [shar-wasm.cjoseph.workers.dev](https://shar-wasm.cjoseph.workers.dev/?skipmovie)                      |
+| 34   | Urban Terror                                           | [ut.pieter.com](https://ut.pieter.com)                                                                 |
+| ---- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |

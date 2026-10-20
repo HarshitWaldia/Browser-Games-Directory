@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browser Games Directory</title>
+  <meta name="description" content="A curated directory of 34 browser-playable and WebAssembly ported classic games.">
+
+  <!-- Open Graph / Facebook / Discord / WhatsApp -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Browser Games Directory">
+  <meta property="og:description" content="Curated archive of 34 retro and ported games playable directly in the browser via WebAssembly and web engines.">
+  <meta property="og:image" content="images/og-banner.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Browser Games Directory">
+  <meta name="twitter:description" content="Curated archive of 34 retro and ported games playable directly in the browser via WebAssembly and web engines.">
+  <meta name="twitter:image" content="images/og-banner.jpg">
+
+  <meta name="theme-color" content="#090a0d">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f1f5f9' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2' y='6' width='20' height='12' rx='2'/%3E%3Cpath d='M6 12h4m-2-2v4m8-2h.01m3-1a1 1 0 1 1-2 0 1 1 0 0 1 2 0'/%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090a0d;
+      --surface: #111318;
+      --surface-hover: #171b22;
+      --surface-card: #13161c;
+      --border: #212630;
+      --border-focus: #3b4252;
+      --text-main: #f1f5f9;
+      --text-muted: #8892b0;
+      --text-subtle: #56617a;
+      --accent: #e2e8f0;
+      --accent-dim: #2b3240;
+      --tag-bg: rgba(15, 18, 24, 0.75);
+      --tag-text: #cbd5e1;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      padding: 0 0 5rem;
+    }
+
+    /* Top Announcement Strip */
+    .top-banner {
+      background: linear-gradient(90deg, #0d1117 0%, #151a23 50%, #0d1117 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 1.5rem;
+      font-size: 0.8rem;
+    }
+
+    .top-banner-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .top-banner-left {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .top-banner-tag {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-main);
+    }
+
+    .top-banner-text {
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+
+    .top-banner-right {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .shortcut-badge {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      color: var(--text-subtle);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .shortcut-key {
+      padding: 0.1rem 0.35rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      color: var(--text-muted);
+    }
+
+    .btn-random {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 0.28rem 0.65rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-family: var(--font-sans);
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: var(--transition);
+    }
+
+    .btn-random:hover {
+      background: var(--surface-hover);
+      color: var(--text-main);
+      border-color: var(--border-focus);
+    }
+
+    .btn-random svg {
+      width: 12px;
+      height: 12px;
+      stroke: currentColor;
+    }
+
+    .container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 0;
+    }
+
+    /* Top Visual Banner */
+    .banner-header {
+      margin-bottom: 2rem;
+    }
+
+    .banner-frame {
+      width: 100%;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+      transition: var(--transition);
+    }
+
+    .banner-frame:hover {
+      border-color: var(--border-focus);
+    }
+
+    .og-banner-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      aspect-ratio: 1200 / 630;
+      object-fit: cover;
+    }
+
+    .stats-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.75rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .stats-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10b981;
+    }
+
+    /* Toolbar Controls */
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .search-row {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .search-wrapper {
+      position: relative;
+      flex: 1;
+      min-width: 260px;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.9rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      stroke: var(--text-subtle);
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.65rem 0.9rem 0.65rem 2.4rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .search-input:focus {
+      border-color: var(--border-focus);
+      background: var(--surface-hover);
+    }
+
+    .search-input::placeholder {
+      color: var(--text-subtle);
+    }
+
+    .view-toggles {
+      display: inline-flex;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 2px;
+    }
+
+    .view-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 0.45rem 0.7rem;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .view-btn.active {
+      background: var(--accent-dim);
+      color: var(--text-main);
+    }
+
+    .view-btn svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+    }
+
+    /* Category Filter Tabs */
+    .filter-tabs {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .filter-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 0.35rem 0.75rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .filter-btn:hover {
+      background: var(--surface-hover);
+      color: var(--text-main);
+      border-color: var(--border-focus);
+    }
+
+    .filter-btn.active {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* Results Header */
+    .results-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      font-size: 0.8rem;
+      color: var(--text-subtle);
+    }
+
+    /* Cards Grid */
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .game-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition);
+    }
+
+    .game-card:hover {
+      background: var(--surface-hover);
+      border-color: var(--border-focus);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+    }
+
+    /* Card Image Header */
+    .card-banner {
+      position: relative;
+      width: 100%;
+      height: 170px;
+      background: #0d0f14;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.35s ease;
+      display: block;
+    }
+
+    .game-card:hover .card-img {
+      transform: scale(1.04);
+    }
+
+    .card-overlay-badges {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      right: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+    }
+
+    .badge-num {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: #f1f5f9;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+
+    .badge-cat {
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: #e2e8f0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+    }
+
+    .card-body {
+      padding: 1.1rem 1.15rem 1.15rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-main);
+      line-height: 1.35;
+      letter-spacing: -0.01em;
+    }
+
+    .card-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding-top: 0.85rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .card-host {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      max-width: 160px;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 0.4rem;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.45rem 0.75rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: var(--transition);
+      border: 1px solid var(--border);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+      font-weight: 600;
+    }
+
+    .btn-primary:hover {
+      background: #ffffff;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-muted);
+    }
+
+    .btn-secondary:hover {
+      background: var(--surface-hover);
+      color: var(--text-main);
+      border-color: var(--border-focus);
+    }
+
+    .btn svg {
+      width: 13px;
+      height: 13px;
+      stroke: currentColor;
+    }
+
+    /* Table View */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+      display: none;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+
+    th {
+      background: #0d0f14;
+      padding: 0.85rem 1rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-size: 0.8rem;
+      letter-spacing: 0.02em;
+    }
+
+    td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-main);
+      vertical-align: middle;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: var(--surface-hover);
+    }
+
+    .td-num {
+      font-family: var(--font-mono);
+      color: var(--text-subtle);
+      width: 48px;
+    }
+
+    .td-game-cell {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .td-thumb {
+      width: 52px;
+      height: 32px;
+      object-fit: cover;
+      border-radius: 4px;
+      background: #0d0f14;
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .td-name {
+      font-weight: 500;
+    }
+
+    .td-category {
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+
+    .td-link a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      transition: var(--transition);
+    }
+
+    .td-link a:hover {
+      color: var(--text-main);
+      text-decoration: underline;
+    }
+
+    .td-action {
+      text-align: right;
+      width: 140px;
+    }
+
+    /* Empty state */
+    .empty-state {
+      display: none;
+      text-align: center;
+      padding: 4rem 1rem;
+      color: var(--text-muted);
+    }
+
+    .empty-state p {
+      font-size: 0.95rem;
+      margin-top: 0.5rem;
+      color: var(--text-subtle);
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #1e2430;
+      color: #f8fafc;
+      border: 1px solid var(--border-focus);
+      padding: 0.65rem 1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 500;
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast svg {
+      width: 14px;
+      height: 14px;
+      stroke: #10b981;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 4rem;
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-subtle);
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 0 0 3rem;
+      }
+      .card-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .card-actions {
+        width: 100%;
+        justify-content: flex-end;
+      }
+      .top-banner-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+      .top-banner-right {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+
+    @keyframes pulseCard {
+      0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.45); border-color: var(--accent); }
+      70% { box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); border-color: var(--accent); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+    }
+
+    .game-card.highlighted {
+      animation: pulseCard 1.6s ease-out;
+      border-color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <aside class="top-banner">
+    <div class="top-banner-inner">
+      <div class="top-banner-left">
+        <span class="top-banner-tag">WASM Runtime</span>
+        <span class="top-banner-text">34 standalone ports running directly in your browser. Zero installation required.</span>
+      </div>
+      <div class="top-banner-right">
+        <span class="shortcut-badge">Press <kbd class="shortcut-key">/</kbd> to search</span>
+        <button id="btn-random-game" class="btn-random" title="Highlight a random game">
+          <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line><line x1="4" y1="4" x2="9" y2="9"></line></svg>
+          Random Game
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <div class="container">
+    <header class="banner-header">
+      <div class="banner-frame">
+        <img src="images/og-banner.jpg" alt="Browser Games Directory - 34 WebAssembly and HTML5 Games" class="og-banner-img">
+      </div>
+    </header>
+
+    <section class="controls">
+      <div class="search-row">
+        <div class="search-wrapper">
+          <svg class="search-icon" fill="none" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="search-input" class="search-input" placeholder="Search by game name, genre, or domain..." autocomplete="off">
+        </div>
+        <div class="view-toggles">
+          <button id="view-grid-btn" class="view-btn active" title="Grid View">
+            <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            Grid
+          </button>
+          <button id="view-table-btn" class="view-btn" title="Table View">
+            <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            Table
+          </button>
+        </div>
+      </div>
+
+      <div class="filter-tabs" id="filter-tabs">
+        <button class="filter-btn active" data-category="all">All (34)</button>
+        <button class="filter-btn" data-category="Shooter">Shooters</button>
+        <button class="filter-btn" data-category="Open World">Open World</button>
+        <button class="filter-btn" data-category="Strategy">Strategy</button>
+        <button class="filter-btn" data-category="Action / RPG">Action & RPG</button>
+        <button class="filter-btn" data-category="Sports & Arcade">Sports & Arcade</button>
+      </div>
+    </section>
+
+    <div class="results-meta">
+      <span id="results-count">Showing 34 of 34 games</span>
+      <span>Direct browser play</span>
+    </div>
+
+    <!-- Grid View -->
+    <div class="games-grid" id="games-grid"></div>
+
+    <!-- Table View -->
+    <div class="table-container" id="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th class="td-num">#</th>
+            <th>Game</th>
+            <th>Category</th>
+            <th>Domain</th>
+            <th class="td-action">Action</th>
+          </tr>
+        </thead>
+        <tbody id="games-table-body"></tbody>
+      </table>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" id="empty-state">
+      <h3>No games found</h3>
+      <p>Try modifying your search query or switching category filters.</p>
+    </div>
+
+    <footer>
+      <p>Curated archive of 34 classic, retro, and web-ported games.</p>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast">
+    <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    <span id="toast-text">Link copied to clipboard</span>
+  </div>
+
+  <script>
+    const gamesData = [
+      { id: 1, name: "Black Ops 1 Zombies", category: "Shooter", group: "Shooter", url: "https://vel.gg/bo1z", host: "vel.gg", img: "images/1.jpg" },
+      { id: 2, name: "Black Ops 2", category: "Shooter", group: "Shooter", url: "https://vibeslops.luckeysystems.com", host: "vibeslops.luckeysystems.com", img: "images/2.jpg" },
+      { id: 3, name: "Black Ops 3 Cheese Cube", category: "Shooter", group: "Shooter", url: "https://cheese-cube.pages.dev", host: "cheese-cube.pages.dev", img: "images/3.jpg" },
+      { id: 4, name: "Call of Duty: World at War Zombies (Nacht der Untoten)", category: "Shooter", group: "Shooter", url: "https://zombies.bitcoinsapi.com", host: "zombies.bitcoinsapi.com", img: "images/4.jpg" },
+      { id: 5, name: "Command & Conquer: Generals Zero Hour", category: "Strategy / RTS", group: "Strategy", url: "https://generals.wasm.ltd", host: "generals.wasm.ltd", img: "images/5.jpg" },
+      { id: 6, name: "Command & Conquer: Red Alert 2", category: "Strategy / RTS", group: "Strategy", url: "https://chronodivide.com", host: "chronodivide.com", img: "images/6.jpg" },
+      { id: 7, name: "Counter-Strike 1.6", category: "Tactical Shooter", group: "Shooter", url: "https://csjs.live", host: "csjs.live", img: "images/7.jpg" },
+      { id: 8, name: "CS Surf", category: "Movement / Skill", group: "Shooter", url: "https://surfd.net", host: "surfd.net", img: "images/8.jpg" },
+      { id: 9, name: "Crash Bash Online", category: "Party / Arcade", group: "Sports & Arcade", url: "https://crashbash.app", host: "crashbash.app", img: "images/9.jpg" },
+      { id: 10, name: "Diablo", category: "Action RPG", group: "Action / RPG", url: "https://johnmilril.github.io/diablo_web/", host: "johnmilril.github.io", img: "images/10.jpg" },
+      { id: 11, name: "GTA 5", category: "Open World", group: "Open World", url: "https://fiveplay.lol", host: "fiveplay.lol", img: "images/11.jpg" },
+      { id: 12, name: "GTA Chinatown Wars", category: "Open World", group: "Open World", url: "https://gta-chinatown-wars.pages.dev", host: "gta-chinatown-wars.pages.dev", img: "images/12.jpg" },
+      { id: 13, name: "GTA III", category: "Open World", group: "Open World", url: "https://wasmarcade.com/gta3", host: "wasmarcade.com", img: "images/13.jpg" },
+      { id: 14, name: "GTA Vice City", category: "Open World", group: "Open World", url: "https://joncodeofficial.github.io/gta-vice-city-wasm/", host: "joncodeofficial.github.io", img: "images/14.jpg" },
+      { id: 15, name: "Half-Life", category: "Sci-Fi Shooter", group: "Shooter", url: "https://pixelsuft.github.io/hl/", host: "pixelsuft.github.io", img: "images/15.jpg" },
+      { id: 16, name: "Halo: Combat Evolved", category: "Sci-Fi Shooter", group: "Shooter", url: "https://mitchellhynes.com/halo/", host: "mitchellhynes.com", img: "images/16.jpg" },
+      { id: 17, name: "Halo CE Mobile", category: "Sci-Fi Shooter", group: "Shooter", url: "https://hcemobile.com", host: "hcemobile.com", img: "images/17.jpg" },
+      { id: 18, name: "Hedgewars", category: "Turn-Based Strategy", group: "Strategy", url: "https://webwars.link", host: "webwars.link", img: "images/18.jpg" },
+      { id: 19, name: "Kino der Toten", category: "Shooter", group: "Shooter", url: "https://kino-der-toten.pages.dev", host: "kino-der-toten.pages.dev", img: "images/19.jpg" },
+      { id: 20, name: "LEGO Island", category: "Adventure", group: "Action / RPG", url: "https://isle.pizza", host: "isle.pizza", img: "images/20.jpg" },
+      { id: 21, name: "Minecraft 1.8.8", category: "Sandbox / Survival", group: "Action / RPG", url: "https://wasmarcade.com/minecraft", host: "wasmarcade.com", img: "images/21.jpg" },
+      { id: 22, name: "Modern Warfare 2", category: "Shooter", group: "Shooter", url: "https://ovz-game-production.up.railway.app", host: "railway.app", img: "images/22.jpg" },
+      { id: 23, name: "Moon (Black Ops Zombies)", category: "Shooter", group: "Shooter", url: "https://moon-zombies.pages.dev", host: "moon-zombies.pages.dev", img: "images/23.jpg" },
+      { id: 24, name: "Pepsiman", category: "Action Runner", group: "Action / RPG", url: "https://pepsiman.ol.mr", host: "pepsiman.ol.mr", img: "images/24.jpg" },
+      { id: 25, name: "PES 6", category: "Sports / Football", group: "Sports & Arcade", url: "https://pes6.optijuegos.net", host: "pes6.optijuegos.net", img: "images/25.jpg" },
+      { id: 26, name: "Quake 1 / QuakeWorld", category: "Arena Shooter", group: "Shooter", url: "https://q1.pieter.com", host: "q1.pieter.com", img: "images/26.jpg" },
+      { id: 27, name: "Quake 2", category: "Arena Shooter", group: "Shooter", url: "https://q2.pieter.com", host: "q2.pieter.com", img: "images/27.jpg" },
+      { id: 28, name: "Quake 3", category: "Arena Shooter", group: "Shooter", url: "https://q3.pieter.com", host: "q3.pieter.com", img: "images/28.jpg" },
+      { id: 29, name: "Return to Castle Wolfenstein", category: "Shooter", group: "Shooter", url: "https://rtcw.pieter.com", host: "rtcw.pieter.com", img: "images/29.jpg" },
+      { id: 30, name: "Skate 3", category: "Extreme Sports", group: "Sports & Arcade", url: "https://skate.aaddpp.lol", host: "skate.aaddpp.lol", img: "images/30.jpg" },
+      { id: 31, name: "Skate Rust", category: "Extreme Sports", group: "Sports & Arcade", url: "https://global-terror.net", host: "global-terror.net", img: "images/31.jpg" },
+      { id: 32, name: "The Binding of Isaac: Repentance+", category: "Roguelike", group: "Action / RPG", url: "https://tboi.online", host: "tboi.online", img: "images/32.jpg" },
+      { id: 33, name: "The Simpsons: Hit & Run", category: "Action / Adventure", group: "Action / RPG", url: "https://shar-wasm.cjoseph.workers.dev/?skipmovie", host: "cjoseph.workers.dev", img: "images/33.jpg" },
+      { id: 34, name: "Urban Terror", category: "Tactical Shooter", group: "Shooter", url: "https://ut.pieter.com", host: "ut.pieter.com", img: "images/34.jpg" }
+    ];
+
+    let currentFilter = 'all';
+    let searchQuery = '';
+    let currentView = 'grid';
+
+    const searchInput = document.getElementById('search-input');
+    const filterTabs = document.getElementById('filter-tabs');
+    const gamesGrid = document.getElementById('games-grid');
+    const tableContainer = document.getElementById('table-container');
+    const gamesTableBody = document.getElementById('games-table-body');
+    const emptyState = document.getElementById('empty-state');
+    const resultsCount = document.getElementById('results-count');
+    const viewGridBtn = document.getElementById('view-grid-btn');
+    const viewTableBtn = document.getElementById('view-table-btn');
+    const toast = document.getElementById('toast');
+
+    function filterGames() {
+      const q = searchQuery.toLowerCase().trim();
+      return gamesData.filter(game => {
+        const matchesCategory = currentFilter === 'all' || game.group === currentFilter;
+        const matchesSearch = !q ||
+          game.name.toLowerCase().includes(q) ||
+          game.category.toLowerCase().includes(q) ||
+          game.host.toLowerCase().includes(q);
+        return matchesCategory && matchesSearch;
+      });
+    }
+
+    function render() {
+      const filtered = filterGames();
+      resultsCount.textContent = `Showing ${filtered.length} of ${gamesData.length} games`;
+
+      if (filtered.length === 0) {
+        gamesGrid.style.display = 'none';
+        tableContainer.style.display = 'none';
+        emptyState.style.display = 'block';
+        return;
+      }
+
+      emptyState.style.display = 'none';
+
+      if (currentView === 'grid') {
+        gamesGrid.style.display = 'grid';
+        tableContainer.style.display = 'none';
+
+        gamesGrid.innerHTML = filtered.map(game => `
+          <div class="game-card">
+            <div class="card-banner">
+              <img src="${escapeHtml(game.img)}" alt="${escapeHtml(game.name)}" class="card-img" loading="lazy">
+              <div class="card-overlay-badges">
+                <span class="badge-num">#${String(game.id).padStart(2, '0')}</span>
+                <span class="badge-cat">${escapeHtml(game.category)}</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <h2 class="card-title">${escapeHtml(game.name)}</h2>
+              <div class="card-bottom">
+                <span class="card-host" title="${escapeHtml(game.url)}">${escapeHtml(game.host)}</span>
+                <div class="card-actions">
+                  <button class="btn btn-secondary" onclick="copyLink('${escapeHtml(game.url)}')">
+                    <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copy
+                  </button>
+                  <a href="${escapeHtml(game.url)}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                    Play
+                    <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      } else {
+        gamesGrid.style.display = 'none';
+        tableContainer.style.display = 'block';
+
+        gamesTableBody.innerHTML = filtered.map(game => `
+          <tr>
+            <td class="td-num">#${String(game.id).padStart(2, '0')}</td>
+            <td>
+              <div class="td-game-cell">
+                <img src="${escapeHtml(game.img)}" alt="${escapeHtml(game.name)}" class="td-thumb" loading="lazy">
+                <span class="td-name">${escapeHtml(game.name)}</span>
+              </div>
+            </td>
+            <td class="td-category">${escapeHtml(game.category)}</td>
+            <td class="td-link"><a href="${escapeHtml(game.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(game.host)}</a></td>
+            <td class="td-action">
+              <button class="btn btn-secondary" style="padding: 0.35rem 0.55rem;" onclick="copyLink('${escapeHtml(game.url)}')">Copy</button>
+              <a href="${escapeHtml(game.url)}" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 0.35rem 0.65rem;">Play</a>
+            </td>
+          </tr>
+        `).join('');
+      }
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    let toastTimer;
+    function copyLink(url) {
+      navigator.clipboard.writeText(url).then(() => {
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toast.classList.remove('show');
+        }, 2200);
+      }).catch(() => {
+        const textarea = document.createElement('textarea');
+        textarea.value = url;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toast.classList.remove('show');
+        }, 2200);
+      });
+    }
+
+    // Event Listeners
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      render();
+    });
+
+    filterTabs.addEventListener('click', (e) => {
+      const btn = e.target.closest('.filter-btn');
+      if (!btn) return;
+      filterTabs.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentFilter = btn.dataset.category;
+      render();
+    });
+
+    viewGridBtn.addEventListener('click', () => {
+      currentView = 'grid';
+      viewGridBtn.classList.add('active');
+      viewTableBtn.classList.remove('active');
+      render();
+    });
+
+    viewTableBtn.addEventListener('click', () => {
+      currentView = 'table';
+      viewTableBtn.classList.add('active');
+      viewGridBtn.classList.remove('active');
+      render();
+    });
+
+    // Keyboard shortcut '/' to search
+    window.addEventListener('keydown', (e) => {
+      if (e.key === '/' && document.activeElement !== searchInput) {
+        e.preventDefault();
+        searchInput.focus();
+      }
+    });
+
+    // Random Game Picker
+    const randomBtn = document.getElementById('btn-random-game');
+    if (randomBtn) {
+      randomBtn.addEventListener('click', () => {
+        if (currentView !== 'grid') {
+          currentView = 'grid';
+          viewGridBtn.classList.add('active');
+          viewTableBtn.classList.remove('active');
+        }
+        currentFilter = 'all';
+        searchQuery = '';
+        searchInput.value = '';
+        filterTabs.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.category === 'all'));
+        render();
+
+        const cards = document.querySelectorAll('.game-card');
+        if (cards.length > 0) {
+          const randomIndex = Math.floor(Math.random() * cards.length);
+          const targetCard = cards[randomIndex];
+          targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          targetCard.classList.remove('highlighted');
+          void targetCard.offsetWidth; // force browser reflow
+          targetCard.classList.add('highlighted');
+        }
+      });
+    }
+
+    render();
+  </script>
+</body>
+</html>
